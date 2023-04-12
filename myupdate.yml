@@ -1,0 +1,33 @@
+name: "Updated yml file"
+
+# on:
+#   push:
+#     branches: ["main"]
+#   pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  ansible:
+    name: "Ansible content"
+    runs-on: ubuntu-latest
+    environment: production
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Ansible code to run
+        run: |
+          # touch myupdate.yml
+          # date > 1.txt
+          # git config user.name github-actions
+          # git config user.email github-actions@github.com
+          # git add 1.txt
+          # git add myupdate.yml
+          # git commit -m updated
+          # git push          
+        shell: bash
