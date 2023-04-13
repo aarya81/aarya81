@@ -10,7 +10,7 @@ export ABHI_STRING="touch myupdate.yml
 git push"
 echo "$ABHI_STRING";
 printenv
-# yq -i '.jobs.ansible.steps[0].run = env(REPLACESTRING)' myupdate.yml
+yq -i '.jobs.ansible.steps[0].run = env(ABHI_STRING)' myupdate.yml
 # yq w -i myupdate.yml '.jobs.ansible.steps[0].run' -- "$(REPLACESTRING)"
 
 
