@@ -45,25 +45,25 @@ jobs:
         if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
       
-      - name: Run script file
-        run: |
-          chmod +x ./updatefile.sh
-          ./updatefile.sh
-        shell: bash
+      # - name: Run script file
+      #   run: |
+      #     chmod +x ./updatefile.sh
+      #     ./updatefile.sh
+      #   shell: bash
 
-  secondworkflow:
-    name: "Second Workflow"
-    needs: terraform
-    runs-on: ubuntu-latest
-    environment: production
+  # secondworkflow:
+  #   name: "Second Workflow"
+  #   needs: terraform
+  #   runs-on: ubuntu-latest
+  #   environment: production
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Run script file
-        run: |
-          echo "list files"
-          ls
-        shell: bash
+  #   # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #   steps:
+  #     - name: Run script file
+  #       run: |
+  #         echo "list files"
+  #         ls
+  #       shell: bash
