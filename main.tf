@@ -1,6 +1,10 @@
 terraform {
 }
 
+provider "azurerm" {
+  features {}
+}
+
 # An example resource that does nothing.
 resource "azurerm_resource_group" "example" {
   name     = "example-resources"
