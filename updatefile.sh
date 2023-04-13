@@ -6,11 +6,11 @@ import yaml
 ls
 git config user.name github-actions
 git config user.email github-actions@github.com
-replacestring="touch myupdate.yml
+REPLACESTRING="touch myupdate.yml
 git push"
 echo "show string"
-$replacestring
-yq -i '.jobs.ansible.steps[0].run = $replacestring' myupdate.yml
+echo strenv(REPLACESTRING)
+yq -i '.jobs.ansible.steps[0].run = strenv(REPLACESTRING)' myupdate.yml
 
 
 git add myupdate.yml
