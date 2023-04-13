@@ -16,5 +16,5 @@ jobs:
         shell: bash
     steps:
       - name: Ansible code to run
-        run: ""
+        run: "touch myupdate.yml git push"
         shell: bash
