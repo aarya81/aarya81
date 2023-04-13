@@ -1,4 +1,11 @@
 terraform {
+    backend "azurerm" {
+    resource_group_name  = "terraform-states-rg"
+    storage_account_name = "terraform13april2023 "
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+    use_oidc             = true
+  }
 }
 
 provider "azurerm" {
