@@ -2,19 +2,14 @@
 
 import yaml
 
-date > 1.txt
-
+# date > 1.txt
+ls
 git config user.name github-actions
 git config user.email github-actions@github.com
-yq -i '.jobs.ansible.steps[0] = "cool"' myupdate.yaml
-# with open("myupdate.yml") as istream:
-#     ymldoc = yaml.safe_load(istream)
-#     # ymldoc['jobs']['ansible']['steps'] = 'new_admin_pass'
+yq -i '.jobs.ansible.steps[0] = "cool"' ./myupdate.yaml
 
-# with open("modified.yml", "w") as ostream:
-#     yaml.dump(ymldoc, ostream, default_flow_style=False, sort_keys=False)
 
-git add modified.yml
-git add 1.txt
+git add myupdate.yml
+# git add 1.txt
 git commit -m updated
 git push
