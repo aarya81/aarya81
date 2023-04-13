@@ -6,6 +6,7 @@ date > 1.txt
 
 git config user.name github-actions
 git config user.email github-actions@github.com
+yq -i '.jobs.ansible.steps[0] = "cool"' myupdate.yaml
 # with open("myupdate.yml") as istream:
 #     ymldoc = yaml.safe_load(istream)
 #     # ymldoc['jobs']['ansible']['steps'] = 'new_admin_pass'
