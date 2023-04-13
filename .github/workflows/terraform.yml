@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      #   ARM_USE_MSI: true
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -30,31 +29,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-      # - uses: hashicorp/setup-terraform@v2
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - uses: hashicorp/setup-terraform@v2
 
-      # # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      # - name: Terraform Init
-      #   run: terraform init
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
 
-      # # Checks that all Terraform configuration files adhere to a canonical format
-      # - name: Terraform Format
-      #   run: terraform fmt -check
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
 
-      # # Generates an execution plan for Terraform
-      # - name: Terraform Plan
-      #   run: terraform plan -input=false
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan -input=false
 
-      #   # On push to "main", build or change infrastructure according to Terraform configuration files
-      #   # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: terraform apply -auto-approve -input=false
-
-      # - name: Azure Login
-      #   uses: azure/login@v1
-      #   with:
-      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+        # On push to "main", build or change infrastructure according to Terraform configuration files
+        # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
 
       - name: Azure/login
         uses: Azure/login@v1
@@ -67,25 +61,25 @@ jobs:
           inlineScript: |
             az vm show --name "example-machine" --resource-group "example-resources"
 
-      # - name: Run script file
-      #   run: |
-      #     chmod +x ./updatefile.sh
-      #     ./updatefile.sh
-      #   shell: bash
+      - name: update ansible file
+        run: |
+          chmod +x ./updatefile.sh
+          ./updatefile.sh
+        shell: bash
 
-  # secondworkflow:
-  #   name: "Second Workflow"
-  #   needs: terraform
-  #   runs-on: ubuntu-latest
-  #   environment: production
+  updateansiblecode:
+    name: "Second Workflow"
+    needs: terraform
+    runs-on: ubuntu-latest
+    environment: production
 
-  #   # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #   steps:
-  #     - name: Run script file
-  #       run: |
-  #         echo "list files"
-  #         ls
-  #       shell: bash
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Run script file
+        run: |
+          echo "list files"
+          ls
+        shell: bash
