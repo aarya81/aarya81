@@ -35,9 +35,10 @@ jobs:
 
       - name: "Run Azure CLI commands"
         run: |
-          az account show
-          az group list
-          pwd
+          ${{ secrets.AZURE_CREDENTIALS }}
+          # az account show
+          # az group list
+          # pwd
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
