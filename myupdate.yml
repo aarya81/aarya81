@@ -16,6 +16,5 @@ jobs:
         shell: bash
     steps:
       - name: Ansible code to run
-        run: |-
-          | cool
+        run: ""
         shell: bash
