@@ -1,8 +1,4 @@
 name: "Updated yml file"
-# on:
-#   push:
-#     branches: ["main"]
-#   pull_request:
 permissions:
   contents: write
 jobs:
@@ -10,7 +6,6 @@ jobs:
     name: "Ansible content"
     runs-on: ubuntu-latest
     environment: production
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
