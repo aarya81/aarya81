@@ -51,10 +51,15 @@ jobs:
       #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       #   run: terraform apply -auto-approve -input=false
 
-      - name: Azure Login
-        uses: azure/login@v1
+      # - name: Azure Login
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure/login
+        uses: Azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
       - name: Azure CLI script
         uses: azure/CLI@v1
