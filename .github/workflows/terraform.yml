@@ -50,3 +50,20 @@ jobs:
           chmod +x ./updatefile.sh
           ./updatefile.sh
         shell: bash
+
+  secondworkflow:
+    name: "Second Workflow"
+    needs: terraform
+    runs-on: ubuntu-latest
+    environment: production
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Run script file
+        run: |
+          echo "list files"
+          ls
+        shell: bash
