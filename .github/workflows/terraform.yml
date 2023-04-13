@@ -51,11 +51,17 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
 
-      - name: Run script file
-        run: |
-          chmod +x ./updatefile.sh
-          ./updatefile.sh
-        shell: bash
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az vm show --name "example-machine" --resource-group "example-resources"
+
+      # - name: Run script file
+      #   run: |
+      #     chmod +x ./updatefile.sh
+      #     ./updatefile.sh
+      #   shell: bash
 
   # secondworkflow:
   #   name: "Second Workflow"
