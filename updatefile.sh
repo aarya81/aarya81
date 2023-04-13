@@ -1,8 +1,6 @@
 #!/bin/sh
 
-$vmName="example-machine"
-$resourceGroup="example-resources"
-az vm show --name $vmName --resource-group $resourceGroup
+az vm show --name "example-machine" --resource-group "example-resources"
 
 # import yaml
 # git config user.name github-actions
