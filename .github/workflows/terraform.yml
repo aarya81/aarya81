@@ -55,7 +55,7 @@ jobs:
         run: |
           # chmod +x ./updatefile.sh
           # ./updatefile.sh
-          echo '${{ github.event_name }}''
+          echo '${{ github.event_name }}'
         shell: bash
 
   # secondworkflow:
