@@ -9,7 +9,7 @@ git config user.email github-actions@github.com
 REPLACESTRING="touch myupdate.yml
 git push"
 
-yq -i '.jobs.ansible.steps[0].run = touch myupdate.yml\ngit push' myupdate.yml
+yq -i '.jobs.ansible.steps[0].run = touch myupdate.yml git push' myupdate.yml
 
 # yq w myupdate.yml .jobs.ansible.steps[0].run "\n$(REPLACESTRING)"
 
