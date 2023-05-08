@@ -7,9 +7,9 @@ echo "Second arg: $2"
 
 git config user.name github-actions
 git config user.email github-actions@github.com
-export ABHI_STRING="touch myupdate.yml
-git push"
-yq -i '.jobs.ansible.steps[0].run = env(ABHI_STRING)' myupdate.yml
+export COMPUTER_FQDN="$1
+$2"
+yq -i '.jobs.ansible.steps[0].run = env(COMPUTER_FQDN)' myupdate.yml
 git add myupdate.yml
 git commit -m updated
 git push
