@@ -41,7 +41,8 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage account create -n terraform8may2023 -g terraform-states-rg-poc -l westeurope --sku Standard_LRS
+            az group create -l westeurope -n terraform-states-rg-poc
+            az storage account create -n terraform8may2023 -g terraform-states-rg-poc -l westeurope --sku Standard_LRS --allow-blob-public-access true
             $key = az storage account keys list -g terraform-states-rg-poc -n terraform8may2023 --query [0].value -o tsv
             az storage container create -n tfstate --account-name terraform8may2023 --account-key $key
 
