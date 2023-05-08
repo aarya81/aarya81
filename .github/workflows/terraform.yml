@@ -76,19 +76,6 @@ jobs:
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - uses: hashicorp/setup-terraform@v2
 
-      - name: Azure login
-        uses: Azure/login@v1
-        with:
-          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
-
-      - name: Azure CLI script to create backend
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az group create -l westeurope -n terraform-states-rg-poc
-            az storage account create -n terraform8may2023 -g terraform-states-rg-poc -l westeurope --sku Standard_LRS --allow-blob-public-access true
-            az storage container create -n tfstate --account-name terraform8may2023 --account-key (az storage account keys list -g terraform-states-rg-poc --account-name terraform8may2023 --query "[0].value")
-
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
         run: terraform init
