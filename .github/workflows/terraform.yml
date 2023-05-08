@@ -64,7 +64,7 @@ jobs:
       - name: update ansible file
         run: |
           chmod +x ./updatefile.sh
-          ./updatefile.sh
+          ./updatefile.sh 'abhishek','arya'
         shell: bash
 
   updateansiblecode:
