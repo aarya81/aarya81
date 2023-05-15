@@ -103,43 +103,43 @@ jobs:
       #   with:
       #     creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
       
-      # - name: loop through vm list
-      #   shell: pwsh
-      #   run: |
-      #     Write-Output "Number of VMs ${{env.VM_COUNT}}"
-      #     Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
-      #     $vmlist = @()
-      #     for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
-      #     {   
-      #       # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
-      #       # echo $vmname
-      #       $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}`n"
-      #     }  
-      #     echo $vmlist
-      #     echo "vm_list=$vmlist" >> "$GITHUB_ENV"
-      # - name: update ansible file
-      #   run: |
-      #       echo "${{ env.vm_list }}"
-      #     # chmod +x ./updatefile.sh
-      #     # ./updatefile.sh $vmlist
-      #   shell: bash
-      - name: Set the value
-        id: step_one
+      - name: loop through vm list
+        shell: pwsh
         run: |
-          echo "action_state=yellow" >> "$GITHUB_ENV"
+          Write-Output "Number of VMs ${{env.VM_COUNT}}"
+          Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
+          $vmlist = @()
+          for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
+          {   
+            # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
+            # echo $vmname
+            $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}`n"
+          }  
+          $vmliststring= "$vmlist"
+          echo "vm_list=$vmliststring" >> "$GITHUB_ENV"
+      - name: update ansible file
+        run: |
+            echo "${{ env.vmliststring }}"
+          # chmod +x ./updatefile.sh
+          # ./updatefile.sh $vmlist
+        shell: bash
+      # - name: Set the value
+      #   id: step_one
+      #   run: |
+      #     echo "action_state=yellow" >> "$GITHUB_ENV"
 
-      - name: Set the value in bash
-        id: step_oneone
-        run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
-          curl https://example.com >> "$GITHUB_ENV"
-          echo "$EOF" >> "$GITHUB_ENV"
-      - name: Use the value
-        id: step_two
-        run: |
-          echo "${{ env.action_state }}" # This will output 'yellow'
-          echo "${{ env.JSON_RESPONSE }}"
+      # - name: Set the value in bash
+      #   id: step_oneone
+      #   run: |
+      #     EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+      #     echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
+      #     curl https://example.com >> "$GITHUB_ENV"
+      #     echo "$EOF" >> "$GITHUB_ENV"
+      # - name: Use the value
+      #   id: step_two
+      #   run: |
+      #     echo "${{ env.action_state }}" # This will output 'yellow'
+      #     echo "${{ env.JSON_RESPONSE }}"
 
   updateansiblecode:
     name: "Second Workflow"
