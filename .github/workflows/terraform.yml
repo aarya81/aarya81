@@ -75,9 +75,9 @@ jobs:
       - name: print variable
         shell: pwsh
         run: |
-          Write-Output "Name $NAME"
-          Write-Output "Number of VMs $VM_COUNT"
-          Write-Output "Domain Name $DOMAIN_NAME"
+          Write-Output "Name ${{env.NAME}}"
+          Write-Output "Number of VMs ${{production.NAME}}"
+          Write-Output "Domain Name ${{production.DOMAIN_NAME}}"
 
       # # Checkout the repository to the GitHub Actions runner
       # - name: Checkout
