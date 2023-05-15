@@ -110,8 +110,8 @@ jobs:
           Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
           for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
           {   
-            echo $x
-            az vm show --name "example-machine" --resource-group "example-resources"  
+            $vmname=(az vm show --name "example-machine" --resource-group "example-resources").name 
+            echo $vmname
           }  
       # - name: Azure CLI script
       #   uses: azure/CLI@v1
