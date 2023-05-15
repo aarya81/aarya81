@@ -113,13 +113,13 @@ jobs:
           {   
             # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
             # echo $vmname
-            $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}`n"
+            $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}"
           }  
           $vmliststring= "$vmlist"
           echo "vm_list=$vmliststring" >> "$GITHUB_ENV"
       - name: update ansible file
         run: |
-            echo "${{ env.vmliststring }}"
+            echo "${{ env.vm_list }}"
           # chmod +x ./updatefile.sh
           # ./updatefile.sh $vmlist
         shell: bash
