@@ -45,7 +45,8 @@
 name: "Terraform"
 
 env:
-  NAME: 'Snyk Demo'
+  VM_COUNT: 10
+  DOMAIN_NAME: "domain1.local"
 
 on:
   push:
@@ -76,7 +77,7 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "Name ${{env.NAME}}"
-          Write-Output "Number of VMs ${{env.NAME}}"
+          Write-Output "Number of VMs ${{env.VM_COUNT}}"
           Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
 
       # # Checkout the repository to the GitHub Actions runner
