@@ -44,6 +44,9 @@
 
 name: "Terraform"
 
+env:
+  NAME: 'Snyk Demo'
+
 on:
   push:
     branches: ["main"]
@@ -72,7 +75,7 @@ jobs:
       - name: print variable
         shell: pwsh
         run: |
-          Write-Output "printing records"
+          Write-Output "Name $NAME"
           Write-Output "Number of VMs $VM_COUNT"
           Write-Output "Domain Name $DOMAIN_NAME"
 
