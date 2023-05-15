@@ -106,8 +106,9 @@ jobs:
       - name: loop through vm list
         shell: pwsh
         run: |
-          Install-Module -Name PSSharedGoods -RequiredVersion 0.0.155
-          currenttime1 = Get-Date
+          Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+          Install-Module -Name PSSharedGoods -RequiredVersion 0.0.155 -Confirm:$false -Repository PSGallery
+          $currenttime1 = Get-Date
           Write-Output "Number of VMs ${{env.VM_COUNT}}"
           Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
           $vmlist = @()
