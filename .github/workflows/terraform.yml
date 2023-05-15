@@ -98,31 +98,39 @@ jobs:
       #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       #   run: terraform apply -auto-approve -input=false
 
-      - name: Azure/login
-        uses: Azure/login@v1
-        with:
-          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
+      # - name: Azure/login
+      #   uses: Azure/login@v1
+      #   with:
+      #     creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
       
-      - name: loop through vm list
-        shell: pwsh
+      # - name: loop through vm list
+      #   shell: pwsh
+      #   run: |
+      #     Write-Output "Number of VMs ${{env.VM_COUNT}}"
+      #     Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
+      #     $vmlist = @()
+      #     for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
+      #     {   
+      #       # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
+      #       # echo $vmname
+      #       $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}`n"
+      #     }  
+      #     echo $vmlist
+      #     echo "vm_list=$vmlist" >> "$GITHUB_ENV"
+      # - name: update ansible file
+      #   run: |
+      #       echo "${{ env.vm_list }}"
+      #     # chmod +x ./updatefile.sh
+      #     # ./updatefile.sh $vmlist
+      #   shell: bash
+      - name: Set the value
+        id: step_one
         run: |
-          Write-Output "Number of VMs ${{env.VM_COUNT}}"
-          Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
-          $vmlist = @()
-          for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
-          {   
-            # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
-            # echo $vmname
-            $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}`n"
-          }  
-          echo $vmlist
-          echo "vm_list=$vmlist" >> "$GITHUB_ENV"
-      - name: update ansible file
+          echo "action_state=yellow" >> "$GITHUB_ENV"
+      - name: Use the value
+        id: step_two
         run: |
-            echo "${{ env.vm_list }}"
-          # chmod +x ./updatefile.sh
-          # ./updatefile.sh $vmlist
-        shell: bash
+          echo "${{ env.action_state }}" # This will output 'yellow'
 
   updateansiblecode:
     name: "Second Workflow"
