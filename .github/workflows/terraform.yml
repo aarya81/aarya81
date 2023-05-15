@@ -73,8 +73,8 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "printing records"
-          $(VM_COUNT)
-          $(DOMAIN_NAME)
+          $VM_COUNT
+          $DOMAIN_NAME
       # # Checkout the repository to the GitHub Actions runner
       # - name: Checkout
       #   uses: actions/checkout@v3
