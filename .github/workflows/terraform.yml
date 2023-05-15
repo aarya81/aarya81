@@ -117,7 +117,7 @@ jobs:
           }
           $vmlist -join "`n"
           # echo "vm_list=$vmlist" >> "$GITHUB_ENV"
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          EOF=Get-Random -Minimum 000000 -Maximum 999999
           echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
           $vmlist >> "$GITHUB_ENV"
           echo "$EOF" >> "$GITHUB_ENV"
