@@ -115,7 +115,7 @@ jobs:
             # echo $vmname
             $vmname="example-machine-$x"
             echo $vmname
-            $vmlist.Add("$vmname.${{env.DOMAIN_NAME}}")
+            $vmlist+="$vmname.${{env.DOMAIN_NAME}}"
           }  
           echo $vmlist
       # - name: update ansible file
