@@ -47,7 +47,6 @@ name: "Terraform"
 env:
   VM_COUNT: 5
   DOMAIN_NAME: "domain1.local"
-  VM_LIST1: ""
 
 on:
   push:
@@ -116,12 +115,16 @@ jobs:
             # echo $vmname
             $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}"
           }
-          VM_LIST1=$vmlist -join "`n"
-          echo "vm_list=$vmlist" >> "$GITHUB_ENV"
+          $vmlist -join "`n"
+          # echo "vm_list=$vmlist" >> "$GITHUB_ENV"
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
+          $vmlist >> "$GITHUB_ENV"
+          echo "$EOF" >> "$GITHUB_ENV"
       - name: update ansible file
         run: |
             echo "${{ env.vm_list }}"
-            echo "${{env.VM_LIST1}}"
+            echo "${{ env.JSON_RESPONSE }}"
           # chmod +x ./updatefile.sh
           # ./updatefile.sh $vmlist
         shell: bash
