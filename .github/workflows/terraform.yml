@@ -115,8 +115,10 @@ jobs:
             # echo $vmname
             $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}"
           }
+          echo "before new line"
           echo $vmlist
           $vmlist -join "`n"
+          echo "after new line"
           echo $vmlist
           # $vmliststring= "$vmlist"
           # echo "vm_list=$vmliststring" >> "$GITHUB_ENV"
