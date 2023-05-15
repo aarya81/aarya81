@@ -108,18 +108,14 @@ jobs:
         run: |
           Write-Output "Number of VMs ${{env.VM_COUNT}}"
           Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
+          $vmlist = @()
           for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
           {   
-            $vmname=(az vm show --name "example-machine" --resource-group "example-resources").name 
+            $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
             echo $vmname
+            $vmlist.Add("example-machine-$x.${{env.DOMAIN_NAME}}")
           }  
-      # - name: Azure CLI script
-      #   uses: azure/CLI@v1
-      #   with:
-      #     inlineScript: |
-      #       $(VM_COUNT)
-      #       az vm show --name "example-machine" --resource-group "example-resources"
-
+          echo $vmlist
       # - name: update ansible file
       #   run: |
       #     chmod +x ./updatefile.sh
