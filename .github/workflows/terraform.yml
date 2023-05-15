@@ -116,10 +116,12 @@ jobs:
             $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}`n"
           }  
           echo $vmlist
+          echo "vm_list=$vmlist" >> "$GITHUB_ENV"
       - name: update ansible file
         run: |
-          chmod +x ./updatefile.sh
-          ./updatefile.sh $vmlist
+            echo "${{ env.vm_list }}"
+          # chmod +x ./updatefile.sh
+          # ./updatefile.sh $vmlist
         shell: bash
 
   updateansiblecode:
