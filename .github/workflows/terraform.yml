@@ -129,7 +129,7 @@ jobs:
           echo "action_state=yellow" >> "$GITHUB_ENV"
 
       - name: Set the value in bash
-        id: step_one
+        id: step_oneone
         run: |
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
