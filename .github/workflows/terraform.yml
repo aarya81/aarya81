@@ -113,16 +113,14 @@ jobs:
           {   
             # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
             # echo $vmname
-            $vmname="example-machine-$x"
-            echo $vmname
-            $vmlist+="$vmname.${{env.DOMAIN_NAME}}"
+            $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}`n"
           }  
           echo $vmlist
-      # - name: update ansible file
-      #   run: |
-      #     chmod +x ./updatefile.sh
-      #     ./updatefile.sh 'abhishek' 'arya'
-      #   shell: bash
+      - name: update ansible file
+        run: |
+          chmod +x ./updatefile.sh
+          ./updatefile.sh $vmlist
+        shell: bash
 
   updateansiblecode:
     name: "Second Workflow"
