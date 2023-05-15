@@ -111,9 +111,11 @@ jobs:
           $vmlist = @()
           for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
           {   
-            $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
+            # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
+            # echo $vmname
+            $vmname="example-machine-$x"
             echo $vmname
-            $vmlist.Add("example-machine-$x.${{env.DOMAIN_NAME}}")
+            $vmlist.Add("$vmname.${{env.DOMAIN_NAME}}")
           }  
           echo $vmlist
       # - name: update ansible file
