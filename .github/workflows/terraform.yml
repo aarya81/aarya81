@@ -76,10 +76,12 @@ jobs:
       - name: print variable
         shell: pwsh
         run: |
-          Write-Output "Name ${{env.NAME}}"
           Write-Output "Number of VMs ${{env.VM_COUNT}}"
           Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
-
+          for($x=1; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
+          {   
+            echo $x   
+          }  
       # # Checkout the repository to the GitHub Actions runner
       # - name: Checkout
       #   uses: actions/checkout@v3
