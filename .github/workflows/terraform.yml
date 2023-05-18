@@ -108,7 +108,7 @@ jobs:
         run: |
           Write-Output "Number of VMs ${{env.VM_COUNT}}"
           Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
-          $vmlist = @()
+          $vmlist = "@()"
           for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
           {   
             # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
@@ -122,6 +122,7 @@ jobs:
           # $vmlist >> "$GITHUB_ENV"
           # echo "$EOF" >> "$GITHUB_ENV"
           $vmstring = [string]$vmlist
+          $vmstring = $vmstring -replace '\s',''
           echo "vm_list=$vmlist" >> "$env:GITHUB_ENV"
           echo "vm_string=$vmstring" >> "$env:GITHUB_ENV"
 
