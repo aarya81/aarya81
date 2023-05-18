@@ -32,17 +32,6 @@ resource "azurerm_subnet" "example" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
-resource "azurerm_public_ip" "example" {
-  name                = "vmpublicIp1"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
-  allocation_method   = "Dynamic"
-
-  tags = {
-    environment = "POC"
-  }
-}
-
 resource "azurerm_network_interface" "example" {
   count               = var.instance_count
   name                = "example-nic-${count.index}"
@@ -53,7 +42,6 @@ resource "azurerm_network_interface" "example" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.example.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.example.id
   }
 }
 
