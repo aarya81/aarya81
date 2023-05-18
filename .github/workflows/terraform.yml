@@ -121,12 +121,14 @@ jobs:
           # echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
           # $vmlist >> "$GITHUB_ENV"
           # echo "$EOF" >> "$GITHUB_ENV"
+          $vmstring = [string]$vmlist
           echo "vm_list=$vmlist" >> "$env:GITHUB_ENV"
+          echo "vm_string=$vmstring" >> "$env:GITHUB_ENV"
+
       - name: update ansible file
         run: |
-          echo "${{ env.vm_list }}"
           chmod +x ./updatefile.sh
-          ./updatefile.sh ${{ env.vm_list }}
+          ./updatefile.sh ${{ env.vm_list }} ${{ env.vm_string }}
         shell: bash
       # - name: Set the value
       #   id: step_one
