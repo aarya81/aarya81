@@ -115,16 +115,7 @@ jobs:
             # echo $vmname
             $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}"
           }
-          # $vmlist -join "`n"
-          # # echo "vm_list=$vmlist" >> "$GITHUB_ENV"
-          # $EOF = Get-Random -Minimum 000000 -Maximum 999999
-          # echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
-          # $vmlist >> "$GITHUB_ENV"
-          # echo "$EOF" >> "$GITHUB_ENV"
-          # $vmstring = [string]$vmlist
-          # $vmstring = $vmstring -replace '\s',''
           echo "vm_list=$vmlist" >> "$env:GITHUB_ENV"
-          # echo "vm_string=$vmstring" >> "$env:GITHUB_ENV"
 
       - name: update ansible file
         run: |
