@@ -106,9 +106,6 @@ jobs:
       - name: loop through vm list
         shell: pwsh
         run: |
-          # Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-          # Install-Module -Name PSSharedGoods -RequiredVersion 0.0.155 -Confirm:$false -Repository PSGallery
-          # $currenttime1 = Get-Date
           Write-Output "Number of VMs ${{env.VM_COUNT}}"
           Write-Output "Domain Name ${{env.DOMAIN_NAME}}"
           $vmlist = @()
@@ -118,19 +115,17 @@ jobs:
             # echo $vmname
             $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}"
           }
-          $vmlist -join "`n"
-          # echo "vm_list=$vmlist" >> "$GITHUB_ENV"
-          $EOF = Get-Random -Minimum 000000 -Maximum 999999
-          echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
-          $vmlist >> "$GITHUB_ENV"
-          echo "$EOF" >> "$GITHUB_ENV"
+          # $vmlist -join "`n"
+          # # echo "vm_list=$vmlist" >> "$GITHUB_ENV"
+          # $EOF = Get-Random -Minimum 000000 -Maximum 999999
+          # echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
+          # $vmlist >> "$GITHUB_ENV"
+          # echo "$EOF" >> "$GITHUB_ENV"
           echo "vm_list=$vmlist" >> "$env:GITHUB_ENV"
       - name: update ansible file
         run: |
-            echo "${{ env.vm_list }}"
-            echo "${{ env.JSON_RESPONSE }}"
-          # chmod +x ./updatefile.sh
-          # ./updatefile.sh $vmlist
+          chmod +x ./updatefile.sh
+          ./updatefile.sh $vmlist
         shell: bash
       # - name: Set the value
       #   id: step_one
