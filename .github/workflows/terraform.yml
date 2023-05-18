@@ -125,8 +125,8 @@ jobs:
       - name: update ansible file
         run: |
           echo "${{ env.vm_list }}"
-          # chmod +x ./updatefile.sh
-          # ./updatefile.sh $vmlist
+          chmod +x ./updatefile.sh
+          ./updatefile.sh ${{ env.vm_list }}
         shell: bash
       # - name: Set the value
       #   id: step_one
