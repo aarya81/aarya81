@@ -124,6 +124,7 @@ jobs:
           echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
           $vmlist >> "$GITHUB_ENV"
           echo "$EOF" >> "$GITHUB_ENV"
+          echo "vm_list=$vmlist" >> "$env:GITHUB_ENV"
       - name: update ansible file
         run: |
             echo "${{ env.vm_list }}"
