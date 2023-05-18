@@ -114,7 +114,7 @@ jobs:
             # this can list down all the vms which you have created.
             # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
             # $vmlist+=$vmname
-            $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}"
+            $vmlist+="example-mac-$x.${{env.DOMAIN_NAME}}"
           }
           # Save the vm list name in environment variable so that this can be use in ansible
           # playbook.
