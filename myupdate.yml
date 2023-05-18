@@ -11,5 +11,5 @@ jobs:
         shell: bash
     steps:
       - name: Ansible code to run
-        run: "example-machine-0.domain1.local example-machine-1.domain1.local example-machine-2.domain1.local example-machine-3.domain1.local example-machine-4.domain1.local"
+        run: "example-mac-0.domain1.local example-mac-1.domain1.local example-mac-2.domain1.local example-mac-3.domain1.local example-mac-4.domain1.local"
         shell: bash
