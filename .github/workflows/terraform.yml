@@ -77,31 +77,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-      # - uses: hashicorp/setup-terraform@v2
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - uses: hashicorp/setup-terraform@v2
 
-      # # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      # - name: Terraform Init
-      #   run: terraform init
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
 
-      # # Checks that all Terraform configuration files adhere to a canonical format
-      # - name: Terraform Format
-      #   run: terraform fmt -check
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
 
-      # # Generates an execution plan for Terraform
-      # - name: Terraform Plan
-      #   run: terraform plan -input=false
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan -input=false
 
-      #   # On push to "main", build or change infrastructure according to Terraform configuration files
-      #   # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: terraform apply -auto-approve -input=false
+        # On push to "main", build or change infrastructure according to Terraform configuration files
+        # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
 
-      # - name: Azure/login
-      #   uses: Azure/login@v1
-      #   with:
-      #     creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
+      - name: Azure/login
+        uses: Azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}"}'
       
       - name: loop through vm list
         shell: pwsh
@@ -111,41 +111,27 @@ jobs:
           $vmlist = @()
           for($x=0; $x -lt ${{env.VM_COUNT}}; $x=$x+1)   
           {   
+            # this can list down all the vms which you have created.
             # $vmname=$(az vm show --name "example-machine" --resource-group "example-resources" --query 'name' -o tsv) 
-            # echo $vmname
+            # $vmlist+=$vmname
             $vmlist+="example-machine-$x.${{env.DOMAIN_NAME}}"
           }
+          # Save the vm list name in environment variable so that this can be use in ansible
+          # playbook.
           echo "vm_list=$vmlist" >> "$env:GITHUB_ENV"
-
+  # this task will update your ansible file as the vm name list with domain name
+  #  is already avaiable in enviornment variable.
       - name: update ansible file
         run: |
           chmod +x ./updatefile.sh
           ./updatefile.sh
-        shell: bash
-      # - name: Set the value
-      #   id: step_one
-      #   run: |
-      #     echo "action_state=yellow" >> "$GITHUB_ENV"
-
-      # - name: Set the value in bash
-      #   id: step_oneone
-      #   run: |
-      #     EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-      #     echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
-      #     curl https://example.com >> "$GITHUB_ENV"
-      #     echo "$EOF" >> "$GITHUB_ENV"
-      # - name: Use the value
-      #   id: step_two
-      #   run: |
-      #     echo "${{ env.action_state }}" # This will output 'yellow'
-      #     echo "${{ env.JSON_RESPONSE }}"
-
+        shell: bash      
+# this can be the second stage which can execute your ansible playbook
   updateansiblecode:
     name: "Second Workflow"
     needs: terraform
     runs-on: ubuntu-latest
     environment: production
-
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
