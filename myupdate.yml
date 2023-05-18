@@ -11,5 +11,5 @@ jobs:
         shell: bash
     steps:
       - name: Ansible code to run
-        run: "abhishek arya"
+        run: "example-machine-0.domain1.local"
         shell: bash
